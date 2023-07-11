@@ -7,7 +7,7 @@ import { useTheme } from 'react-native-paper';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, TimeScale } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import Annotation, { AnnotationOptions } from 'chartjs-plugin-annotation';
-
+import moment from 'moment';
 Chart.register(
   CategoryScale,
   LinearScale,
@@ -19,8 +19,11 @@ Chart.register(
   Annotation,
 );
 
+
 const BarChart = ({ chartData, axisTitle, lineAnnotations=null, isHorizontal=false }) => {
 
+  chartData = sampleChartData;
+  lineAnnotations = sampleAnnotations
   const { colors } = useTheme();
   const [ numVisibleDatasets, setNumVisibleDatasets ] = useState(1);
 
@@ -82,7 +85,7 @@ const BarChart = ({ chartData, axisTitle, lineAnnotations=null, isHorizontal=fal
           resizeDelay: 1,
           scales: {
             ...(isHorizontal ? {
-              y: {
+              x: {
                 offset: true,
                 type: 'time',
                 adapters: {
@@ -95,9 +98,9 @@ const BarChart = ({ chartData, axisTitle, lineAnnotations=null, isHorizontal=fal
                 beforeUpdate: (axis) => {
                   setNumVisibleDatasets(axis.chart.getVisibleDatasetCount())
                 },
-                reverse: true,
+                reverse: false,
               },
-              x: {
+              y: {
                 title: { display: true, text: axisTitle },
               },
             } : {
@@ -156,46 +159,99 @@ BarChart.propTypes = {
 angularize(BarChart, 'BarChart', 'emission.main.barchart');
 export default BarChart;
 
-// const sampleAnnotations = [
-//   { value: 35, label: 'Target1' },
-//   { value: 65, label: 'Target2' },
-// ];
 
-// const sampleChartData = [
-//   {
-//     label: 'Primary',
-//     records: [
-//       { x: moment('2023-06-20'), y: 20 },
-//       { x: moment('2023-06-21'), y: 30 },
-//       { x: moment('2023-06-23'), y: 80 },
-//       { x: moment('2023-06-24'), y: 40 },
-//     ],
-//   },
-//   {
-//     label: 'Secondary',
-//     records: [
-//       { x: moment('2023-06-21'), y: 10 },
-//       { x: moment('2023-06-22'), y: 50 },
-//       { x: moment('2023-06-23'), y: 30 },
-//       { x: moment('2023-06-25'), y: 40 },
-//     ],
-//   },
-//   {
-//     label: 'Tertiary',
-//     records: [
-//       { x: moment('2023-06-20'), y: 30 },
-//       { x: moment('2023-06-22'), y: 40 },
-//       { x: moment('2023-06-24'), y: 10 },
-//       { x: moment('2023-06-25'), y: 60 },
-//     ],
-//   },
-//   {
-//     label: 'Quaternary',
-//     records: [
-//       { x: moment('2023-06-22'), y: 10 },
-//       { x: moment('2023-06-23'), y: 20 },
-//       { x: moment('2023-06-24'), y: 30 },
-//       { x: moment('2023-06-25'), y: 40 },
-//     ],
-//   },
-// ];
+
+
+/*
+const sampleAnnotations = [
+  { value: 35, label: 'Target1' },
+  { value: 65, label: 'Target2' },
+];
+
+const sampleChartData = [
+  {
+    label: 'Primary',
+    records: [
+      { x: moment('2023-06-20'), y: 20 },
+      { x: moment('2023-06-21'), y: 30 },
+      { x: moment('2023-06-23'), y: 80 },
+      { x: moment('2023-06-24'), y: 40 },
+    ],
+  },
+  {
+    label: 'Secondary',
+    records: [
+      { x: moment('2023-06-21'), y: 10 },
+      { x: moment('2023-06-22'), y: 50 },
+      { x: moment('2023-06-23'), y: 30 },
+      { x: moment('2023-06-25'), y: 40 },
+    ],
+  },
+  {
+    label: 'Tertiary',
+    records: [
+      { x: moment('2023-06-20'), y: 30 },
+      { x: moment('2023-06-22'), y: 40 },
+      { x: moment('2023-06-24'), y: 10 },
+      { x: moment('2023-06-25'), y: 60 },
+    ],
+  },
+  {
+    label: 'Quaternary',
+    records: [
+      { x: moment('2023-06-22'), y: 10 },
+      { x: moment('2023-06-23'), y: 20 },
+      { x: moment('2023-06-24'), y: 30 },
+      { x: moment('2023-06-25'), y: 40 },
+    ],
+  },
+];
+*/
+
+
+
+
+const sampleAnnotations = [
+  { value: 35, label: 'Target1' },
+  { value: 65, label: 'Target2' },
+];
+
+const sampleChartData = [
+  {
+    label: 'Primary',
+    records: [
+      { y: moment('2023-06-20'), x: 20 },
+      { y: moment('2023-06-21'), x: 30 },
+      { y: moment('2023-06-23'), x: 80 },
+      { y: moment('2023-06-24'), x: 40 },
+    ],
+  },
+  {
+    label: 'Secondary',
+    records: [
+      { y: moment('2023-06-21'), x: 10 },
+      { y: moment('2023-06-22'), x: 50 },
+      { y: moment('2023-06-23'), x: 30 },
+      { y: moment('2023-06-25'), x: 40 },
+    ],
+  },
+  {
+    label: 'Tertiary',
+    records: [
+      { y: moment('2023-06-20'), x: 30 },
+      { y: moment('2023-06-22'), x: 40 },
+      { y: moment('2023-06-24'), x: 10 },
+      { y: moment('2023-06-25'), x: 60 },
+    ],
+  },
+  {
+    label: 'Quaternary',
+    records: [
+      { y: moment('2023-06-22'), x: 10 },
+      { y: moment('2023-06-23'), x: 20 },
+      { y: moment('2023-06-24'), x: 30 },
+      { y: moment('2023-06-25'), x: 40 },
+    ],
+  },
+];
+
